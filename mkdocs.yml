@@ -1,5 +1,7 @@
-site_name: IBDGC Docs
-site_url: https://squidfunk.github.io/mkdocs-material/
+site_name: Docs
+site_url: https://docs.ibdgc.org
+repo_url: https://github.com/ibdgc/ibdgc-docs
+repo_name: ibdgc/ibdgc-docs
 site_author: Christopher Tastad
 site_description: >-
   Centralized documentation for various methods and tools of the NIDDK IBD Genetics Consortium
@@ -18,14 +20,14 @@ theme:
     # - content.tabs.link
     #- content.tooltips
     # - header.autohide
-    # - navigation.expand
+    - navigation.expand
     #- navigation.footer
     #- navigation.indexes
     # - navigation.instant
     # - navigation.instant.prefetch
     # - navigation.instant.progress
     # - navigation.prune
-    - navigation.sections
+    # - navigation.sections
     - navigation.tabs
     # - navigation.tabs.sticky
     - navigation.top
@@ -53,3 +55,5 @@ theme:
     code: Roboto Mono
       # favicon: assets/favicon.png
   logo: initialism-contrast.png
+  icon: 
+    repo: fontawesome/brands/git-alt 
