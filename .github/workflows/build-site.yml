@@ -15,7 +15,8 @@ jobs:
           submodules: 'recursive'
       - name: Build site
         run: |
-          docker run --rm -v ${{ github.workspace }}:/docs squidfunk/mkdocs-material build
+          pip install mkdocs-material mkdocs-jupyter
+          mkdocs build
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v2
         with:
