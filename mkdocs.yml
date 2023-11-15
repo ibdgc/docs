@@ -57,3 +57,6 @@ theme:
   logo: initialism-contrast.png
   icon: 
     repo: fontawesome/brands/git-alt 
+
+plugins:
+  - mkdocs-jupyter
