@@ -1,17 +1,20 @@
 # Methods
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+For the vcf files from folders `SubsetHailJointCall`. These files didn’t have required FILTER tags in the header. Also, the GT field was named as LGT, which prevented accurate processing of these files with bcftools and plink. An example for how to correct the issues is shown below.
+ 
+Did the following steps for vcfs under “SubsetHailJointCall” folders to correct headers
 
-## Commands
+    bcftools view -h /PATH/TO/anvil_ccdg_broad_ai_ibd_daly_newberry_share_wes.vcf.bgz > hdr.txt
+    
+Add necessary filter flags in the hdr.txt:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+    ##FILTER=<ID=VQSRTrancheSNP99.00to99.90+,Description="VQSRTrancheSNP99.00to99.90+">
+    ##FILTER=<ID=VQSRTrancheINDEL99.00to99.90+,Description="VQSRTrancheINDEL99.00to99.90+">
+    ##FILTER=<ID=VQSRTrancheINDEL99.00to99.90,Description="VQSRTrancheINDEL99.00to99.90">
+    ##FILTER=<ID=VQSRTrancheSNP99.00to99.90,Description="VQSRTrancheSNP99.00to99.90">
+     
+    bcftools reheader -h hdr.txt -o header_fixed_anvil_ccdg_broad_ai_ibd_daly_newberry_share_wes.vcf.bgz /PATH/TO/anvil_ccdg_broad_ai_ibd_daly_newberry_share_wes.vcf.bgz
+    
+Fix the GT tag in the FORMAT
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+    bcftools view -Ov header_fixed_anvil_ccdg_broad_ai_ibd_daly_newberry_share_wes.vcf.bgz | sed -e 's/LGT/GT/g' | bcftools view -Oz -o GT_fixed_anvil_ccdg_broad_ai_ibd_daly_newberry_share_wes.vcf.bgz
