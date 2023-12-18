@@ -8,26 +8,26 @@ site_description: >-
 
 # Configuration
 theme:
-  name: material
-    # custom_dir: material/overrides
+  name: material # custom_dir: material/overrides
   features:
     # - announce.dismiss
     # - content.action.edit
     # - content.action.view
-    # - content.code.annotate
-    # - content.code.copy
+    - content.code.annotate
+    - content.code.copy
     # - content.code.select
     # - content.tabs.link
     #- content.tooltips
     # - header.autohide
     - navigation.expand
     #- navigation.footer
-    #- navigation.indexes
-    # - navigation.instant
-    # - navigation.instant.prefetch
-    # - navigation.instant.progress
-    # - navigation.prune
-    # - navigation.sections
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.prune
+    - navigation.sections
+    # - navigation.path
     - navigation.tabs
     # - navigation.tabs.sticky
     - navigation.top
@@ -52,11 +52,20 @@ theme:
         name: Switch to dark mode
   font:
     text: Roboto
-    code: Roboto Mono
-      # favicon: assets/favicon.png
+    code: Roboto Mono # favicon: assets/favicon.png
   logo: initialism-contrast.png
-  icon: 
-    repo: fontawesome/brands/git-alt 
+  icon:
+    repo: fontawesome/brands/git-alt
 
 plugins:
   - mkdocs-jupyter
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
