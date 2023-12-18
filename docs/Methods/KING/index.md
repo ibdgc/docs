@@ -6,14 +6,18 @@ Note: The location of input files was a tmp dir on minerva
 
     TMP_DATA_DIR=/sc/arion/projects/ibdgc/uchicago-transfer/data/wes/updates
 
-### 1. European GSA - merged, imputed plink format
+### 1. European GSA
+
+**merged, imputed plink format**
 
 Set unique names for each sample by adding the dataset name
 
     awk '{print " gsa_allCHRmerged_imputed ""@"$2"\t"dataset"@"$2"\t"$3"\t"$4"\t"$5"\t"$6}' gsa_allCHRmerged_imputed.fam> tmp.fam
     mv tmp.fam gsa_allCHRmerged_imputed.fam
 
-### 2. non-European GSA - chromosome-based imputed genotypes in vcf format
+### 2. non-European GSA
+
+**chromosome-based imputed genotypes in vcf format**
 
     ml plink2/v2.00a3.3
     ml plink
@@ -60,7 +64,9 @@ Merged all site-specific plink files together (only available in plink v.1.9).
 
     plink --merge-list merge_list.txt --out nonEUR_GSA_merged --keep-allele-order
 
-### 3. African American Array – chromosome-based imputed genotypes in vcf format (Omni and Axiom)
+### 3. African American Array
+
+**chromosome-based imputed genotypes in vcf format (Omni and Axiom)**
 
     ml plink2/v2.00a3.3
     ml bcftools
@@ -106,14 +112,18 @@ Set unique names for each sample by adding the dataset name.
     awk '{print dataset"@"$2"\t"dataset"@"$2"\t"$3"\t"$4"\t"$5"\t"$6}' mergedAxiom.fam > tmp.fam
     mv tmp.fam mergedAxiom.fam
 
-### 4. WGS – plink format
+### 4. WGS
+
+**plink format**
 
 Set unique names for each sample by adding the dataset name.
 
     awk '{print "cutler-AA-WGS-big_daly""@"$2"\t"dataset"@"$2"\t"$3"\t"$4"\t"$5"\t"$6}' cutler-AA-WGS-big_daly.fam> tmp.fam
     mv tmp.fam cutler-AA-WGS-big_daly.fam
 
-### 5. WES – vcf files
+### 5. WES
+
+**vcf files**
 
  I. For the 275 small vcf files from stampfer: $TMP_DATA_DIR/anvil_ccdg_broad_ai_ibd_daly_stampfer_wes/anvil_ccdg_broad_ai_ibd_daly_stampfer_wes/sharded_vcf/
 
@@ -206,7 +216,9 @@ Merged all site-specific plink files together (only available in plink v.1.9).
 
     plink --merge-list WES_merge_list.txt --out WES_merged --keep-allele-order
 
-### 6. Selected overlapping variants from all merged plink files and further merged them together
+### 6. Overlapping Variants
+
+Selected overlapping variants from all merged plink files and further merged them together
 
     awk -F'\t' 'NR==FNR{c[$2]++;next};c[$2] > 0' gsa_allCHRmerged_imputed.bim nonEUR_GSA_merged.bim > tmp1
     awk -F'\t' 'NR==FNR{c[$2]++;next};c[$2] > 0' tmp1 mergedOmni.bim > tmp2
@@ -224,7 +236,9 @@ Merged all site-specific plink files together (only available in plink v.1.9).
 
     plink --merge-list final_merge_list.txt --out merged_all --keep-allele-order
 
-### 7. Ran king to check if the same sample IDs from the same sites were indeed the same samples (yes, they were!)
+### 7. Intra-GRC KING Run
+
+Ran king to check if the same sample IDs from the same sites were indeed the same samples (yes, they were!)
 
     king --b WES_merged.bed --duplicate --prefix king_for_wes
 
@@ -232,7 +246,7 @@ removed recurring samples from the same sites
 
     plink2 --bfile merged_all --remove same_samples_from_the_samesites.txt --make-bed --out final_merged_for_king
 
-### 8. Ran KING for all data
+### 8. All Data KING Run
 
     ml king/2.2.5
 
